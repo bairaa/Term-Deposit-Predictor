@@ -5,8 +5,8 @@ import pandas as pd
 
 # Page Config
 st.set_page_config(
-    page_title="Bank Portugal — Term Deposit Predictor",
-    page_icon="🏦",
+    page_title="PortuBank — Term Deposit Predictor",
+    page_icon="portubank_logo.png",
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -307,9 +307,14 @@ def get_priority_tier(prob, artifacts):
 # Header
 st.markdown("""
 <div class="header-banner">
-  <div class="bank-tag">🏦 Bank Portugal</div>
-  <h1>Term Deposit Subscription Predictor</h1>
-  <p>Sistem Prediksi Berbasis Machine Learning untuk Meminimalkan Biaya Loss Kampanye Telemarketing Deposito Berjangka</p>
+  <div style="display:flex;align-items:center;gap:1.2rem">
+    <img src="app/static/portubank_logo.png" style="width:64px;height:64px;object-fit:contain;filter:drop-shadow(0 2px 6px #0004)">
+    <div>
+      <div class="bank-tag">PortuBank</div>
+      <h1>Term Deposit Subscription Predictor</h1>
+      <p>Sistem Prediksi Berbasis Machine Learning untuk Meminimalkan Biaya Loss Kampanye Telemarketing Deposito Berjangka</p>
+    </div>
+  </div>
 </div>
 """, unsafe_allow_html=True)
 
@@ -500,7 +505,7 @@ with main_col:
                 if "Tingkat 1" in tier_label:
                     tier_class = "tier-1"
                     tier_icon  = "🔴"
-                    tier_action = "Hubungi <strong>pertama</strong> — prioritas utama saat anggaran kampanye terbatas."
+                    tier_action = "Hubungi <strong>pertama</strong> — alokasikan ke agen senior dengan closing rate terbaik."
                     tier_budget = "Prioritas saat anggaran terbatas (33% kapasitas)."
                 elif "Tingkat 2" in tier_label:
                     tier_class = "tier-2"
@@ -565,37 +570,6 @@ with main_col:
                 unsafe_allow_html=True
             )
             st.progress(min(prob, 1.0))
-
-            # Cara Baca Hasil — di bawah progress bar
-            st.markdown("<br>", unsafe_allow_html=True)
-            st.markdown('<div class="section-title">💡 Cara Membaca Hasil</div>', unsafe_allow_html=True)
-            st.markdown("""<div class="info-card" style="font-size:0.82rem;line-height:1.7">
-              <div style="margin-bottom:0.6rem">
-                <span style="color:#1a6b40;font-weight:600">✅ Layak Dihubungi</span><br>
-                <span style="color:#4a3f2f">Expected return positif. Probabilitas melampaui threshold F6-optimal.
-                Lihat Priority Tier untuk menentukan urutan kontak.</span>
-              </div>
-              <div style="margin-bottom:0.6rem">
-                <span style="color:#991b1b;font-weight:600">🔴 Tingkat 1 — Tinggi</span><br>
-                <span style="color:#4a3f2f">Probabilitas tertinggi (top 33%). Hubungi pertama, terutama
-                saat anggaran kampanye terbatas.</span>
-              </div>
-              <div style="margin-bottom:0.6rem">
-                <span style="color:#9a3412;font-weight:600">🟠 Tingkat 2 — Sedang</span><br>
-                <span style="color:#4a3f2f">Peluang moderat (mid 33%). Hubungi setelah Tingkat 1 selesai,
-                efektif saat kapasitas cukup.</span>
-              </div>
-              <div style="margin-bottom:0.6rem">
-                <span style="color:#4b5563;font-weight:600">⚪ Tingkat 3 — Rendah</span><br>
-                <span style="color:#4a3f2f">Bottom 33% predicted-yes. Masuk daftar kontak,
-                eksekusi saat kapasitas penuh.</span>
-              </div>
-              <div>
-                <span style="color:#b83232;font-weight:600">❌ Tidak Direkomendasikan</span><br>
-                <span style="color:#4a3f2f">Expected return negatif. Biaya panggilan melebihi
-                ekspektasi pendapatan NIM dari nasabah ini.</span>
-              </div>
-            </div>""", unsafe_allow_html=True)
 
         except Exception as e:
             st.error(f"Terjadi error saat prediksi: {e}")
@@ -670,7 +644,26 @@ with info_col:
           </div>
         </div>""", unsafe_allow_html=True)
 
-
+    # Cara Baca Hasil
+    st.markdown("<br>", unsafe_allow_html=True)
+    st.markdown('<div class="section-title">💡 Cara Membaca Hasil</div>', unsafe_allow_html=True)
+    st.markdown("""<div class="info-card" style="font-size:0.82rem;line-height:1.7">
+      <div style="margin-bottom:0.6rem">
+        <span style="color:#1a6b40;font-weight:600">✅ Layak Dihubungi</span><br>
+        <span style="color:#4a3f2f">Expected return positif. Probabilitas melampaui threshold F6-optimal.
+        Lihat Priority Tier untuk menentukan urutan kontak.</span>
+      </div>
+      <div style="margin-bottom:0.6rem">
+        <span style="color:#e07b00;font-weight:600">🔴 Tingkat 1 — Tinggi</span><br>
+        <span style="color:#4a3f2f">Probabilitas tertinggi (top 33%). Hubungi pertama, terutama
+        saat anggaran kampanye terbatas.</span>
+      </div>
+      <div>
+        <span style="color:#b83232;font-weight:600">❌ Tidak Direkomendasikan</span><br>
+        <span style="color:#4a3f2f">Expected return negatif. Biaya panggilan melebihi
+        ekspektasi pendapatan NIM dari nasabah ini.</span>
+      </div>
+    </div>""", unsafe_allow_html=True)
 
 
 # Authors
@@ -717,7 +710,7 @@ for col, author in zip(author_cols, AUTHORS):
 # Footer
 st.markdown("""
 <div class="footer">
-  Bank Portugal · Term Deposit Telemarketing Optimization System ·
+  PortuBank · Term Deposit Telemarketing Optimization System ·
   Model: LightGBM F6-optimized · Dataset: UCI Bank Marketing (Moro et al., 2014)
 </div>
 """, unsafe_allow_html=True)
